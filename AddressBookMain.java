@@ -15,14 +15,10 @@ public class AddressBookMain {
     */
     public void createContacts(ArrayList <String> contact){
         
-        // Create an arraylist of arraylist to store contact details of all the persons
-        //ArrayList<ArrayList <String>> address_book = new ArrayList<ArrayList <String>>();
-        
         // Add contact details of person to address book
         AddressBookMain.address_book.add(contact);
         
-        // Print contact details of persons in address book
-        
+        // Print contact details of persons in address book  
         for (ArrayList <String> i: AddressBookMain.address_book ){
             for (String j: i){
                 System.out.println(j);
@@ -85,35 +81,56 @@ public class AddressBookMain {
     /*
     Use case 3: Edit existing contact person using their name
     */
+    // Returns the index of contact details of a person in address book
+    public int searchExistingContact(String search_pers){
+        int indx = -1;
+        int temp_indx = -1;
+        for (ArrayList <String> i:AddressBookMain.address_book){
+            // find index of arraylist in which the given name is there
+            temp_indx ++;
+            for (String j:i){   
+                // if name is found
+                if (j.equals(search_pers)){
+                    indx = temp_indx;
+                    break;
+                }
+            }    
+        }
+        return indx;
+    }
+    // to change the contact details 
     public void editExistingContact(){
         System.out.println("Enter the name of the person whose details you "
                 + "want to be changed");
         Scanner sc = new Scanner(System.in);
         String search_pers = sc.next();
-        int index = -1;
-        for (ArrayList <String> i:AddressBookMain.address_book){
-            // find index of arraylist in which the given name is there
-            index ++;
-            for (String j:i){   
-                // if name is found
-                if (j.equals(search_pers)){
-                    
-                    System.out.println("Found the name, kindly enter new details ");
-                    // Ask for the new details
-                    ArrayList <String> contact = enterContactDetails();
-                    // Modify the values in the arrayList
-                    AddressBookMain.address_book.set(index, contact);
-                    break;
-                }
-            }    
-        }  
-    }
+        int index = searchExistingContact(search_pers);
+        System.out.println("Found the name, Kindly enter new details ");
+        // Ask for the new details
+        ArrayList <String> contact = enterContactDetails();
+        // Modify the values in the arrayList
+        AddressBookMain.address_book.set(index, contact);
+        }
     
+    /*
+    Use case 4: Delete an existing person contact using his name in address book
+    */
+    public void deleteExistingContact(){
+        System.out.println("Enter the name of the person whose details you "
+                + "want to be deleted");
+        Scanner sc = new Scanner(System.in);
+        String search_pers = sc.next();
+        // Fetch the index of person in address book
+        int index = searchExistingContact(search_pers);
+        // delete the details of person
+        AddressBookMain.address_book.remove(index);
+    }
     
     public static void main(String []args){
         System.out.println("Welcome to Address Book Program!");
         AddressBookMain abm  = new AddressBookMain();
         abm.addContact();
-        abm.editExistingContact();
+        abm.deleteExistingContact();
+        
     }
 }
