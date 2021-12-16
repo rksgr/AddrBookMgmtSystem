@@ -28,6 +28,12 @@ public class AddressBookMain {
     /*
     Use case 2: Add a new contact to address book
     */
+    
+    public void addContact(){
+        ArrayList <String> contact = enterContactDetails();
+        createContacts(contact);
+    }
+    // Asks to enter all the details of person
     public ArrayList enterContactDetails(){
         ArrayList <String> contact = new ArrayList <String>();
         
@@ -72,10 +78,6 @@ public class AddressBookMain {
         contact.add(email);
         
         return contact;
-    }
-    public void addContact(){
-        ArrayList <String> contact = enterContactDetails();
-        createContacts(contact);
     }
     
     /*
@@ -126,11 +128,22 @@ public class AddressBookMain {
         AddressBookMain.address_book.remove(index);
     }
     
+    /*
+    Use case 5 :Add multiple person to address book
+    */
+    public void addMultiplePerson(){
+        System.out.println("Enter the number of persons whose details you want "
+                + "to add to the address book");
+        Scanner sc = new Scanner(System.in);
+        int no_of_person = sc.nextInt();
+        for (int i=1;i<=no_of_person;i++){
+            // call addition method for so many times
+            addContact();
+        }
+    }
     public static void main(String []args){
         System.out.println("Welcome to Address Book Program!");
         AddressBookMain abm  = new AddressBookMain();
-        abm.addContact();
-        abm.deleteExistingContact();
-        
+        abm.addMultiplePerson();
     }
 }
